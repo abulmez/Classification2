@@ -1,7 +1,9 @@
 package ui;
 
+import model.Net;
 import model.Tree;
 import repository.FileRepo;
+import service.ArtificialNeuralNetworkService;
 import service.EvolutionaryAlgorithmService;
 
 import java.util.ArrayList;
@@ -10,6 +12,7 @@ import java.util.Scanner;
 public class UI {
 
     private EvolutionaryAlgorithmService evolutionaryAlgorithmService;
+    private ArtificialNeuralNetworkService artificialNeuralNetworkService;
 
     private Scanner sc;
     public UI(){
@@ -24,13 +27,13 @@ public class UI {
         int x=2;
         FileRepo repo = new FileRepo("column_3C_weka_data.arff", "column_3C_weka_test.arff");
         evolutionaryAlgorithmService = new EvolutionaryAlgorithmService(repo);
-
+        artificialNeuralNetworkService =  new ArtificialNeuralNetworkService(repo);
 
         Boolean merge = true;
         while(merge) {
 
             System.out.println("Alegeti algoritmul de antrenare:");
-            System.out.println("1.Gradient descendent");
+            System.out.println("1.Retea neuronala artificiala");
             System.out.println("2.Programare genetica");
             System.out.println("3.Iesire");
             x = sc.nextInt();
@@ -61,14 +64,9 @@ public class UI {
                     Double learningRate = sc.nextDouble();
                     System.out.println("Dati numarul de iteratii:");
                     int numberOfIterations = sc.nextInt();
-                  //  ArrayList<Double> result = stochasticGradientDescentService.solve(numberOfIterations, learningRate, resultColumn);
-                    System.out.println("Coeficientii determinati:");
-                   // for (Double rez : result) {
-                   //     System.out.print(rez + " ");
-                   // }
+                    Net net = artificialNeuralNetworkService.runMLP(learningRate,numberOfIterations);
                     System.out.println();
-                    System.out.println();
-                 //   System.out.println("Performanta algoritmului: " + (int)(evolutionaryAlgorithmService.testAccuracy(result,resultColumn)*100)+"%");
+                    System.out.println("Performanta algoritmului: " + (int)(artificialNeuralNetworkService.evaluateMLP(net)*100)+"%");
                     break;
                 }
                 case 3: {

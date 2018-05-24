@@ -49,4 +49,8 @@ public class Matrix<E> {
     public void setRows(Integer rows) {
         this.rows = rows;
     }
+
+    public ArrayList<E> getRow(Integer index){
+        return matrix.get(index);
+    }
 }
